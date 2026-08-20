@@ -1,0 +1,22 @@
+{% extends "catalog/base.html" %}
+{% block title %}
+    {% if form.instance.pk %}
+        Правка альбома
+    {% else %}
+        Новый альбом
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <h1 class="mb-5 text-2xl font-bold">
+        {% if form.instance.pk %}
+            Правка альбома
+        {% else %}
+            Новый альбом
+        {% endif %}
+    </h1>
+    {% url 'catalog:album-list' as cancel_url %}
+    {% include "catalog/components/model_form.html" with cancel_url=cancel_url %}
+    <p class="mt-5 max-w-lg border-l-4 border-slate-200 pl-4 text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        Песни добавляются в альбом после его создания — на странице альбома.
+    </p>
+{% endblock %}

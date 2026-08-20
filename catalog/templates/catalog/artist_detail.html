@@ -1,0 +1,31 @@
+{% extends "catalog/base.html" %}
+{% load catalog_ui %}
+{% block title %}{{ artist.name }}{% endblock %}
+{% block content %}
+    <p class="mb-3 text-sm text-slate-500 dark:text-slate-400">
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{% url 'catalog:artist-list' %}">Исполнители</a> / {{ artist.name }}
+    </p>
+    <div class="mb-6 flex flex-wrap items-start justify-between gap-4">
+        <h1 class="text-2xl font-bold">{{ artist.name }}</h1>
+        <span class="flex items-center gap-3">
+            {# Исполнитель подставляется в форму нового альбома через строку запроса. #}
+            {% url 'catalog:album-create' as album_create_url %}
+            {% with artist_id=artist.pk|stringformat:"s" %}
+                {% include "catalog/components/button.html" with label="+ Альбом" url=album_create_url|add:"?artist="|add:artist_id only %}
+            {% endwith %}
+            <span class="text-sm">
+                {% url 'catalog:artist-update' artist.pk as edit_url %}
+                {% url 'catalog:artist-delete' artist.pk as delete_url %}
+                {% include "catalog/components/row_actions.html" with edit_url=edit_url delete_url=delete_url only %}
+            </span>
+        </span>
+    </div>
+    <h2 class="mb-3 text-lg font-semibold">Альбомы</h2>
+    {% if artist.albums.all %}
+        {% table_columns "Год:right" "Название" "Треков:right" as columns %}
+        {% include "catalog/components/table.html" with columns=columns rows=artist.albums.all row_template="catalog/components/rows/artist_album.html" %}
+    {% else %}
+        <p class="py-6 text-slate-500 dark:text-slate-400">У исполнителя пока нет альбомов.</p>
+    {% endif %}
+{% endblock %}

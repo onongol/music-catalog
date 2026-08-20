@@ -1,0 +1,17 @@
+{% comment %}
+Панель поиска. Поля берутся из формы циклом, поэтому одна разметка подходит и
+списку альбомов с фильтрами по исполнителю и году, и спискам, где нужна только
+строка поиска: полный набор показывается при show_filters.
+{% endcomment %}
+<form class="mb-5 flex flex-wrap gap-2" method="get">
+    {% for field in form %}
+        {% if show_filters or field.name == "search" %}
+            <label class="sr-only" for="{{ field.auto_id }}">{{ field.label }}</label>
+            {% include "catalog/components/field_control.html" with field=field only %}
+        {% endif %}
+    {% endfor %}
+    {% include "catalog/components/button.html" with label="Найти" only %}
+    {% if show_reset %}
+        {% include "catalog/components/button_ghost.html" with label="Сбросить" url=reset_url only %}
+    {% endif %}
+</form>

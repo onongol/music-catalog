@@ -1,0 +1,29 @@
+{% comment %}
+Таблица каталога. Шапка собирается циклом по columns (тег table_columns),
+строки рисует шаблон row_template — он получает очередной объект как row.
+Оформление ячеек задано на tbody вариантами [&_td] и [&_tr]: так классы ячейки
+описаны один раз, а шаблоны строк содержат только свою разметку.
+{% endcomment %}
+<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+    <table class="w-full border-collapse bg-white text-sm dark:bg-slate-800">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                    <th class="border-b border-slate-200 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-400 {% if column.right %}text-right{% else %}text-left{% endif %}"
+                        scope="col">
+                        {% if column.label %}
+                            {{ column.label }}
+                        {% else %}
+                            <span class="sr-only">Действия</span>
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="[&_td]:border-b [&_td]:border-slate-100 [&_td]:px-4 [&_td]:py-3 [&_td]:align-middle dark:[&_td]:border-slate-700/60 [&_tr:last-child_td]:border-b-0 [&_tr]:transition [&_tr:hover]:bg-blue-50/60 dark:[&_tr:hover]:bg-slate-700/40">
+            {% for row in rows %}
+                {% include row_template %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

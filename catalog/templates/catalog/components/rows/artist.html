@@ -1,0 +1,13 @@
+{# Строка списка исполнителей. #}
+<tr>
+    <td>
+        <a class="font-medium text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.get_absolute_url }}">{{ row.name }}</a>
+    </td>
+    <td class="text-right tabular-nums">{{ row.album_count }}</td>
+    <td class="whitespace-nowrap text-right">
+        {% url 'catalog:artist-update' row.pk as edit_url %}
+        {% url 'catalog:artist-delete' row.pk as delete_url %}
+        {% include "catalog/components/row_actions.html" with edit_url=edit_url delete_url=delete_url only %}
+    </td>
+</tr>

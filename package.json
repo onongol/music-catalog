@@ -1,0 +1,22 @@
+{
+  "name": "music-catalog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Frontend build for the music catalog: Vite + Tailwind CSS",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "watch": "vite build --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.1"
+  }
+}

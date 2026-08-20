@@ -1,0 +1,46 @@
+{% extends "catalog/base.html" %}
+{% block content %}
+    <h1 class="text-3xl font-bold">Каталог музыкальных альбомов</h1>
+    <div class="mt-6 flex flex-wrap gap-3">
+        {% for stat in stats %}
+            {% include "catalog/components/stat_card.html" with stat=stat only %}
+        {% endfor %}
+    </div>
+    <div class="mt-8 grid gap-8 md:grid-cols-2">
+        <section>
+            <h2 class="mb-3 text-lg font-semibold">Недавно добавленные альбомы</h2>
+            {% if latest_albums %}
+                <ul class="divide-y divide-slate-200 dark:divide-slate-700">
+                    {% for album in latest_albums %}
+                        <li class="py-2">
+                            <a class="text-blue-600 hover:underline dark:text-blue-400"
+                               href="{{ album.get_absolute_url }}">{{ album.title }}</a>
+                            <span class="text-slate-500 dark:text-slate-400">— {{ album.artist.name }}, {{ album.release_year }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-slate-500 dark:text-slate-400">
+                    Каталог пуст. Загрузите демо-данные командой
+                    <code class="rounded bg-slate-200 px-1 dark:bg-slate-700">python manage.py seed_demo</code>.
+                </p>
+            {% endif %}
+        </section>
+        <section>
+            <h2 class="mb-3 text-lg font-semibold">Песни в нескольких альбомах</h2>
+            {% if multi_album_songs %}
+                <ul class="divide-y divide-slate-200 dark:divide-slate-700">
+                    {% for song in multi_album_songs %}
+                        <li class="flex items-center justify-between gap-3 py-2">
+                            <a class="text-blue-600 hover:underline dark:text-blue-400"
+                               href="{{ song.get_absolute_url }}">{{ song.title }}</a>
+                            <span class="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-600 dark:bg-slate-700 dark:text-blue-400">{{ song.album_count }} альбома</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-slate-500 dark:text-slate-400">Пока нет песен, входящих больше чем в один альбом.</p>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

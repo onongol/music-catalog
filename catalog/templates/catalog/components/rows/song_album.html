@@ -1,0 +1,18 @@
+{# Строка списка альбомов, в которые входит песня. #}
+<tr>
+    <td>
+        <a class="font-medium text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.album.get_absolute_url }}">{{ row.album.title }}</a>
+    </td>
+    <td>
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.album.artist.get_absolute_url }}">{{ row.album.artist.name }}</a>
+    </td>
+    <td class="text-right tabular-nums">{{ row.album.release_year }}</td>
+    <td class="text-right text-base font-bold tabular-nums">{{ row.track_number }}</td>
+    <td class="whitespace-nowrap text-right">
+        {% url 'catalog:track-update' row.pk as edit_url %}
+        {% url 'catalog:track-delete' row.pk as delete_url %}
+        {% include "catalog/components/row_actions.html" with edit_url=edit_url delete_url=delete_url edit_label="номер" delete_label="убрать" only %}
+    </td>
+</tr>

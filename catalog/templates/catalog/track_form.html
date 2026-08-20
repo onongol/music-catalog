@@ -1,0 +1,28 @@
+{% extends "catalog/base.html" %}
+{% block title %}
+    Треклист · {{ album.title }}
+{% endblock %}
+{% block content %}
+    <p class="mb-3 text-sm text-slate-500 dark:text-slate-400">
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{% url 'catalog:album-list' %}">Альбомы</a> /
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ album.get_absolute_url }}">{{ album.title }}</a> /
+        треклист
+    </p>
+    <h1 class="text-2xl font-bold">
+        {% if form.instance.pk %}
+            Изменить трек
+        {% else %}
+            Добавить песню в альбом
+        {% endif %}
+    </h1>
+    <p class="mb-5 mt-1 text-slate-500 dark:text-slate-400">{{ album.artist.name }} — {{ album.title }} ({{ album.release_year }})</p>
+    {% include "catalog/components/model_form.html" with cancel_url=album.get_absolute_url %}
+    <p class="mt-5 max-w-lg border-l-4 border-slate-200 pl-4 text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        Нужной песни нет в списке?
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{% url 'catalog:song-create' %}">Создайте её</a>,
+        затем вернитесь сюда.
+    </p>
+{% endblock %}

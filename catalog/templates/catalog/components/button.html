@@ -1,0 +1,11 @@
+{% comment %}
+Основное действие: ссылка, если передан url, иначе кнопка отправки формы.
+Набор классов один на оба случая, поэтому вынесен в переменную.
+{% endcomment %}
+{% with style="inline-flex items-center gap-1.5 rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400" %}
+    {% if url %}
+        <a class="{{ style }}" href="{{ url }}">{{ label }}</a>
+    {% else %}
+        <button class="{{ style }}" type="submit">{{ label }}</button>
+    {% endif %}
+{% endwith %}

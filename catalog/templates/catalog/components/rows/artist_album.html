@@ -1,0 +1,9 @@
+{# Строка списка альбомов на карточке исполнителя. #}
+<tr>
+    <td class="text-right tabular-nums">{{ row.release_year }}</td>
+    <td>
+        <a class="font-medium text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.get_absolute_url }}">{{ row.title }}</a>
+    </td>
+    <td class="text-right tabular-nums">{{ row.track_count }}</td>
+</tr>

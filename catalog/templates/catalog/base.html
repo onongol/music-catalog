@@ -1,0 +1,34 @@
+{% load django_vite catalog_ui %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <title>{% block title %}Каталог музыкальных альбомов{% endblock %}</title>
+        {%vite_hmr_client %}
+        {% vite_asset 'assets/js/main.js' %}
+        <link rel="icon"
+              href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='rgb(24,24,27)'/><circle cx='16' cy='16' r='11.5' fill='none' stroke='rgb(82,82,91)' stroke-width='1'/><circle cx='16' cy='16' r='8.5' fill='none' stroke='rgb(82,82,91)' stroke-width='1'/><circle cx='16' cy='16' r='5' fill='rgb(37,99,235)'/><circle cx='16' cy='16' r='1.4' fill='rgb(250,250,250)'/></svg>" />
+    </head>
+    <body class="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100">
+        <header class="border-b border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
+            <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-4">
+                <a class="text-lg font-bold" href="{% url 'catalog:home' %}">Music Catalog</a>
+                {% main_nav %}
+            </div>
+        </header>
+        <main class="mx-auto max-w-5xl px-5 py-8">
+            {% if messages %}
+                <ul class="mb-6 space-y-2">
+                    {% for message in messages %}
+                        <li class="rounded-lg px-4 py-3 text-sm {% if message.tags == 'error' %}bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200 {% else %}bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200{% endif %}">
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+    </body>
+</html>

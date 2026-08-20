@@ -1,0 +1,14 @@
+{# Строка треклиста на карточке альбома. #}
+<tr>
+    <td class="text-right font-semibold tabular-nums">{{ row.track_number }}</td>
+    <td>
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.song.get_absolute_url }}">{{ row.song.title }}</a>
+    </td>
+    <td class="text-right tabular-nums">{{ row.song_album_count }}</td>
+    <td class="whitespace-nowrap text-right">
+        {% url 'catalog:track-update' row.pk as edit_url %}
+        {% url 'catalog:track-delete' row.pk as delete_url %}
+        {% include "catalog/components/row_actions.html" with edit_url=edit_url delete_url=delete_url edit_label="номер" delete_label="убрать" only %}
+    </td>
+</tr>

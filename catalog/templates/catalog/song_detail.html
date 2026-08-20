@@ -1,0 +1,23 @@
+{% extends "catalog/base.html" %}
+{% load catalog_ui %}
+{% block title %}{{ song.title }}{% endblock %}
+{% block content %}
+    <p class="mb-3 text-sm text-slate-500 dark:text-slate-400">
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{% url 'catalog:song-list' %}">Песни</a> / {{ song.title }}
+    </p>
+    <div class="mb-6 flex flex-wrap items-start justify-between gap-4">
+        <h1 class="text-2xl font-bold">{{ song.title }}</h1>
+        <span class="text-sm">
+            {% url 'catalog:song-update' song.pk as edit_url %}
+            {% url 'catalog:song-delete' song.pk as delete_url %}
+            {% include "catalog/components/row_actions.html" with edit_url=edit_url delete_url=delete_url only %}
+        </span>
+    </div>
+    {% if song.album_entries.all %}
+        {% table_columns "Альбом" "Исполнитель" "Год:right" "№ трека:right" "" as columns %}
+        {% include "catalog/components/table.html" with columns=columns rows=song.album_entries.all row_template="catalog/components/rows/song_album.html" %}
+    {% else %}
+        <p class="py-6 text-slate-500 dark:text-slate-400">Песня пока не входит ни в один альбом. Добавить её можно со страницы альбома.</p>
+    {% endif %}
+{% endblock %}

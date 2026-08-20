@@ -1,0 +1,20 @@
+{# Строка списка песен: число альбомов больше одного выделяется значком. #}
+<tr>
+    <td>
+        <a class="font-medium text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.get_absolute_url }}">{{ row.title }}</a>
+    </td>
+    <td class="whitespace-nowrap text-right tabular-nums">
+        {% if row.album_count > 1 %}
+            <span class="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-600 dark:bg-slate-700 dark:text-blue-400"
+                  title="Песня входит в несколько альбомов">{{ row.album_count }}</span>
+        {% else %}
+            {{ row.album_count }}
+        {% endif %}
+    </td>
+    <td class="whitespace-nowrap text-right">
+        {% url 'catalog:song-update' row.pk as edit_url %}
+        {% url 'catalog:song-delete' row.pk as delete_url %}
+        {% include "catalog/components/row_actions.html" with edit_url=edit_url delete_url=delete_url only %}
+    </td>
+</tr>

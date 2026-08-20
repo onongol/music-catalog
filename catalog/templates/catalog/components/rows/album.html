@@ -1,0 +1,18 @@
+{# Строка списка альбомов. #}
+<tr>
+    <td>
+        <a class="font-medium text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.get_absolute_url }}">{{ row.title }}</a>
+    </td>
+    <td>
+        <a class="text-blue-600 hover:underline dark:text-blue-400"
+           href="{{ row.artist.get_absolute_url }}">{{ row.artist.name }}</a>
+    </td>
+    <td class="text-right tabular-nums">{{ row.release_year }}</td>
+    <td class="text-right tabular-nums">{{ row.track_count }}</td>
+    <td class="whitespace-nowrap text-right">
+        {% url 'catalog:album-update' row.pk as edit_url %}
+        {% url 'catalog:album-delete' row.pk as delete_url %}
+        {% include "catalog/components/row_actions.html" with edit_url=edit_url delete_url=delete_url only %}
+    </td>
+</tr>
