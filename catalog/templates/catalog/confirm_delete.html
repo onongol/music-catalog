@@ -1,22 +1,22 @@
-{% extends "catalog/base.html" %} 
-{% block title %}Удаление{% endblock %} 
-{%block content %}
-<h1 class="mb-5 text-2xl font-bold">Удалить {{ object_kind }}?</h1>
-<div class="max-w-lg rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
-    <p class="text-lg font-semibold">{{ object }}</p>
-    {% if consequence %}
-        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">{{ consequence }}</p>
-    {% endif %}
-    <form class="mt-5" method="post">
-        {% csrf_token %}
-        <div class="flex items-center gap-3">
-            {# Единственная опасная кнопка в приложении, поэтому классы на месте. #}
-            <button class="inline-flex items-center rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 focus:ring-2 focus:ring-red-400 focus:outline-none"
-                    type="submit">Удалить</button>
-            {% firstof request.META.HTTP_REFERER "/" as back_url %} {% include
-                "catalog/components/button_ghost.html" with label="Отмена" url=back_url
-                only %}
-        </div>
-    </form>
-</div>
+{% extends "catalog/base.html" %}
+{% block title %}Удаление{% endblock %}
+{% block content %}
+    <h1 class="mb-5 text-2xl font-bold">Удалить {{ object_kind }}?</h1>
+    <div class="max-w-lg rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
+        <p class="text-lg font-semibold">{{ object }}</p>
+        {% if consequence %}
+            <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">{{ consequence }}</p>
+        {% endif %}
+        <form class="mt-5" method="post">
+            {% csrf_token %}
+            <div class="flex items-center gap-3">
+                {# Единственная опасная кнопка в приложении, поэтому классы на месте. #}
+                <button class="inline-flex items-center rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 focus:ring-2 focus:ring-red-400 focus:outline-none"
+                        type="submit">Удалить</button>
+                {% firstof request.META.HTTP_REFERER "/" as back_url %} {% include
+                    "catalog/components/button_ghost.html" with label="Отмена" url=back_url
+                    only %}
+            </div>
+        </form>
+    </div>
 {% endblock %}
